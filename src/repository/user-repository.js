@@ -1,4 +1,5 @@
 const { User } = require('../models/index');
+const { use } = require('../routes');
 
 class UserRepository {
     async create(data) {
@@ -28,6 +29,17 @@ class UserRepository {
             const user=await User.findByPk(userId,{
                 attributes:['email','id']
             });
+            return user;
+        } catch (error) {
+            console.log("Somethingwent wrong in repository layer");
+            throw error;
+        }
+    }
+    async getByEmail(userEmail){
+        try {
+            const user=await User.findOne({where:{
+                email:userEmail
+            }});
             return user;
         } catch (error) {
             console.log("Somethingwent wrong in repository layer");
