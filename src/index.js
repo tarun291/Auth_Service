@@ -6,11 +6,13 @@ const { PORT } = require('./config/serverConfig');
 
 const apiRoutes = require('./routes/index');
 
-const app = express();
+// const { User } = require('./models/index');
 
-const { User } = require('./models/index');
+// const bcrypt = require('bcrypt');
 
-const bcrypt = require('bcrypt');
+// const UserRepository=require('./repository/user-repository');
+
+const app=express();
 
 const prepareAndStartServer = () => {
     app.use(bodyParser.json());
@@ -19,10 +21,13 @@ const prepareAndStartServer = () => {
 
     app.listen(PORT, async () => {
         console.log(`Server Started on Port:${PORT}`);
-        const incommingPassword = "Sarthak";
-        const user = await User.findByPk(9);
-        const response = bcrypt.compareSync(incommingPassword, user.password);
-        console.log(response);
+        // const repo=new UserRepository();
+        // const response=await repo.getById(9);
+        // console.log(response);
+        // const incommingPassword = "Sarthak";
+        // const user = await User.findByPk(9);
+        // const response = bcrypt.compareSync(incommingPassword, user.password);
+        // console.log(response);
     })
 }
 prepareAndStartServer();
