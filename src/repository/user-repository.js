@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User, Role } = require('../models/index');
 const { use } = require('../routes');
 
 class UserRepository {
@@ -24,28 +24,58 @@ class UserRepository {
             throw error;
         }
     }
-    async getById(userId){
+    async getById(userId) {
         try {
-            const user=await User.findByPk(userId,{
-                attributes:['email','id','password']
+            const user = await User.findByPk(userId, {
+                attributes: ['email', 'id', 'password']
             });
             return user;
         } catch (error) {
-            console.log("Somethingwent wrong in repository layer");
+            console.log("Something went wrong in repository layer");
             throw error;
         }
     }
-    async getByEmail(userEmail){
+    async getByEmail(userEmail) {
         try {
-            const user=await User.findOne({where:{
-                email:userEmail
-            }});
+            const user = await User.findOne({
+                where: {
+                    email: userEmail
+                }
+            });
             return user;
         } catch (error) {
-            console.log("Somethingwent wrong in repository layer");
+            console.log("Something went wrong in repository layer");
             throw error;
         }
-    }   
+    }
+    async isAdmin(userId) {
+        try {
+            const user = await User.findByPk(userId);
+            const adminRole = await Role.findOne({
+                where: {
+                    name: 'ADMIN'
+                }
+            });
+            return user.hasRole(adminRole);
+        } catch (error) {
+            console.log("Something went wrong in repository layer");
+            throw error;
+        }
+    }
+    async isCustomer(userId){
+        try {
+            const user=await User.findByPk(userId);
+            const customerRole=await Role.findOne({
+                where:{
+                    name:'CUSTOMER'
+                }
+            })
+            return user.hasRole(customerRole);
+        } catch (error) {
+            console.log("Something went wrong in repository layer");
+            throw error;
+        }
+    }
 }
 
 module.exports = UserRepository;

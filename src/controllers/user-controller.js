@@ -64,8 +64,47 @@ const isAuthenticated=async (req,res)=>{
     }
 }
 
+const isAdmin=async(req,res)=>{
+    try {
+        const responce=await userService.isAdmin(req.body.userId);
+        return res.status(200).json({
+            data:responce,
+            err:{},
+            success:true,
+            message:"Successfully fetched weather user is admin or not"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Something went wrong",
+            data: {},
+            success: false,
+            err: error
+        })   
+    }
+}
+const isCustomer=async(req,res)=>{
+    try {
+        const responce=await userService.isCustomer(req.body.userId);
+        return res.status(200).json({
+            data:responce,
+            err:{},
+            success:true,
+            message:"Successfully fetched weather user is Customer or not"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message: "Something went wrong",
+            data: {},
+            success: false,
+            err: error
+        })   
+    }
+}
+
 module.exports={
     create,
     sigin,
-    isAuthenticated
+    isAuthenticated,
+    isAdmin,
+    isCustomer
 }
