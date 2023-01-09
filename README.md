@@ -5,5 +5,6 @@
 
   Additional Features:
 
-  --> deleting an User account
-  --> finding whether an User is admin or not
+  - deleting an User account
+
+  - finding whether an User is admin or not
